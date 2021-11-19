@@ -1,0 +1,142 @@
+练习：
+1.使用绝对路径表达
+    / home/tarena/month01/day03/homework.txt
+2.在当前位置所在位置查找
+    ..表示上一级目录；.表示同级目录
+    所以目录结构一定不是/开头
+    问：在当前文本位置，如何寻找上述文件？
+    答：../../month01/day03/homework.txt
+    最后部分有/的，结尾最后一个目录是文件夹，也可以省去/
+二、常用linux的命令
+快捷键
+    1.ctrl+alt+t     打开终端 打开初始化的终端，为主目录下的终端
+    2.ctrl+shift+n   打开终端 在原有终端基础上，加载一个同级终端
+    3.cd + 文件夹名    改变终端位置
+    4.ctrl + d       关闭终端
+    5.输入exit        关闭终端
+    6.ctrl+shift+"+" 放大字号
+    7.ctrl + l       清空屏幕
+    8.调取历史命令     上下箭头
+命令格式
+    command [-options] [parameter]
+    说明：
+    command：命令名称，一般为英文单词或单词的缩写
+    [-options]：命令选项，辅助命令进行功能细化，也可以省略
+    [parameter]：传给命令的参数，可以是0个或多个
+  例子：
+    ls：列出当前文件夹下的所有文件名
+    ls -l：列出当前文件夹下文件的详细信息  （-开头是文件;d开头是文件夹）
+    ls -l month02/day01：列出day01文件夹下文件的详细信息
+
+常用命令：
+   帮助命令
+        man command
+      说明：查阅command的使用手册，按q退出
+   基础操作命令
+   1 ls                 查看当前文件夹下的内容 list directory contents
+     ls -l              列出当前文件夹下文件的详细信息
+     ls -a              查看所有文件（主要用来查看隐藏文件——以.开头的文件都会隐藏）
+   2 pwd                查看当前所在位置的绝对路径 print name of current/working directory
+   3 cd[目录名]          切换文件夹 commend
+     cd-                去往上一个位置
+    例子：使用cd命令，进入到主目录下的下载文件夹中
+    方法：     cd 下载
+       or   cd /home/tarena/下载
+       or   cd ../../下载
+   4 touch[文件名]       如果文件夹不存在，新建文件
+   5 mkdir[目录名]       创建目录 make directories
+   6 rm[文件名]          删除指定文件名 remove files or directories
+     rm -r              删除文件夹
+   7 cp                 复制一个文件 copy files and directories
+     巧用                cp 文件1 文件2（相当于把 文件1 另存）
+     cp -r              复制文件夹
+   8 mv                 移动文件 (格式：mv 目标文件 目标位置) 移动文件夹也不需要加-r
+                        move (rename) files
+     巧用                mv 文件1 文件2（相当于把 文件1 重命名）
+    *小技巧： 使用Tab键可以自动补全文件名，目录名等信息
+    * 通配符
+
+    * 作用：对一类文件名称的书写进行简化，例如file1.txt、file2.txt、file3.txt……，用户不必一一输入文件名，可以使用通配符完成。
+      | 通配符            | 含义                | 实例                                                       |
+      | ---------------- | -------------------| ---------------------------------------------------------- |
+      | **星号（\*）**    | 匹配任意长度的字符串   | 用file_\*.txt，匹配file_wang.txt、file_Lee.txt、file_Liu.txt |
+      | 问号（?）         | 匹配一个长度的字符    | 用flie_?.txt，匹配file_1.txt、file_2.txt、file_3.txt          |
+      | **方括号（**[…]） | 匹配其中指定的一个字符 | 用file_[otr].txt，匹配file_o.txt、file_r.txt和file_t.txt      |
+      | 方括号（[  - ]）  | 匹配指定的一个字符范围 | 用file_[a-z].txt，匹配file_a.txt、file_b.txt，直到file_z.txt  |
+
+   文件操作命令
+
+    1 cat[文件名]            查看文件内容、创建文件、文件合并、追加文件内容等功能concatenate files and print on the standard output
+    2 head[文件名]           显示文件头部
+    3 tail[文件名]           显示文件尾部
+                            tail -5 hello.py
+                            展示hello.py文件的后五行
+    4 grep[搜索文本][文件名]  搜索文本文件内容 (搜索文本前加-i 不区分大小写,i 是ignore的意思）print lines matching a pattern
+                                           搜索文本前加-n 显示第几行
+                             grep -i"hello" hello.py
+                             grep 寻找不区分大小写的"hello" 在hello.py文件中查找
+    5 find[目录]-name[文件名] 在一个目录及其子目录文件
+                             find month01 -name demo01.py
+                             find 从当前目录机器子文件查找， 按名称查找，文件具体名称
+    6 wc[文件名]             查看文件行数，单词数等信息 print newline, word, and byte counts for each file
+                            wc hello.py
+                            3  6 63 hello.py  (3回车，6字符组合，63字符）
+      wc -l                 查看文件行数  line
+      wc -w                 查看文件单词数 words
+      wc -c                 查看文件字符数 chars
+     * 管道 |
+      可以把一系列命令连接起来，意味着第一个命令的输出将作为第二个命令的输入，通过管道传递给第二个命令，第二个命令的输出又将作为第三个命令的输入，以此类推。
+
+      练习1：
+            在对应文件中查找demo01.py文件中的前八行，是否有print语句
+            head -8 /home/tarena/month01/day06/demo01.py | grep "print"
+            print(list)
+      练习2：
+            在 /etc下有多少个文件
+             ls /etc | wc -w
+             231
+
+   压缩解压命令
+    1 zip ，unzip     将文件压缩为zip格式/将zip格式文件解压
+    2 gzip，gunzip    将文件压缩为gz格式/将gz格式文件解压
+    3 bzip2,bunzip2   将文件压缩为bz2格式/将bz2格式文件解压
+    4 tar             对gz或者bz2格式进行压缩解压
+    * tar：压缩文件名，一般为 文件名.tar.格式 组合
+    -cjf 用于压缩bz2格式文件
+    -czf用于压缩gz格式文件
+    -xvf用于解压文件 （解压后直接覆盖原文件，压缩包仍然在）
+    -c 表示整合文件
+    -f 表示归纳到的文件名
+    -j or -z  表示对应格式
+
+    * > tar    -czf    file.tar.gz   file1  file2
+
+    * > tar   -xvf    file.tar.gz
+
+#### 	2.2.7 其他命令
+
+| 序号 | 命令                  | 作用                                                 |
+| :--- | :-------------------  | :--------------------------------------------------- |
+| 01   | shutdown | 关机或者重启 |
+| 02   | ln | 创建链接 |
+
+
+* 部分命令细节说明
+  * shutdown：
+
+    * > shutdown -r now 立即重启
+
+    * > shutdown now 立即关机
+
+    * > shutdown +10 10分钟后关机
+
+    * > shutdown -c  取消关机计划
+
+  * ln : 一般使用  -s 选项 创建软链接，相当于快捷方式，如果跨目录创建要使用绝对路径。
+         make links between files
+
+    ```shell
+    ln -s  hello.py  hello  （源文件与链接在同一位置）
+    ln -s  /home/tarena/month02/day02/hello.py  hello  （源文件与链接不在同一位置,在哪里写就是在哪里创作链接）
+                       写绝对路径                链接名称
+
